@@ -84,10 +84,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         present(alertController, animated: true)
         
     }
-    
+
     //метод для получения выбранного фото из библиотеки изображений устройства
+    //штатная функция swift
     //Этот метод сообщает делегату, что пользователь выбрал фото (или другой медиа-контент), и включает фото в словарь info
-    func imageControlPicker(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         //Так как словарь info имеет тип [UIImagePickerController.InfoKey: Any], то значение для ключа originalImage не будет иметь тип UIImage. Необходимо привести тип значения к типу UIImage
         //защита. если мы можем создать экземпляр из info[.originalImage] и привести к типу UIImage то:
         guard let selectedImage = info[.originalImage] as? UIImage else { return }
@@ -97,6 +98,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         //и закроем выбор изображения
         dismiss(animated: true, completion: nil)
     }
+    
     
     @IBAction func emailButtonTapped(_ sender: Any) {
     }
