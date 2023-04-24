@@ -7,10 +7,12 @@
 
 import UIKit
 import SafariServices
+import MessageUI
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, MFMailComposeViewControllerDelegate {
     //UIImagePickerControllerDelegate передаст информацию о выбранном изображении обратно в приложение.
     //UINavigationControllerDelegate будет отвечать за закрытие представления выбора изображения.
+    //MFMailComposeViewControllerDelegate отвечает за закрытие контроллера создания почтового сообщения в нужный момент
 
     @IBOutlet weak var imageView: UIImageView!
     
@@ -101,6 +103,39 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     
     @IBAction func emailButtonTapped(_ sender: Any) {
+        //проверка по библиотеке MessageUI на возможность отправки сообщений устройством пользователя, если такой возможности нет, выйти из функции
+        guard MFMailComposeViewController.canSendMail() else {
+            print("Can not send mail")
+            return
+        }
+        
+        //создаем экземпляр класса
+        let mailComposer = MFMailComposeViewController()
+        //и назначаем его делегатом
+        mailComposer.mailComposeDelegate = self
+        
+        //назначаем кому отправится письмо
+        mailComposer.setToRecipients(["example@example.com"])
+        //устанавливаем тему
+        mailComposer.setSubject("Look at this")
+        //заполняем поле с сообещением
+        //sHTML - Bool для проверки, должен ли ваше сообщение интерпретироваться как простой текст или HTML. В этом электронном письме вы не будете отправлять HTML, поэтому параметр isHTML установлен в false.
+        mailComposer.setMessageBody("Hello, this is an email from the app I made.", isHTML: false)
+        
+        //если в imageView.image есть изображение и мы можем сжать изображение то
+        if let image = imageView.image, let jpegData = image.jpegData(compressionQuality: 0.9) {
+            //добавим вложение в письмо, установим тип и имя для файла
+            mailComposer.addAttachmentData(jpegData, mimeType: "image/jpeg", fileName: "photo.jpg")
+        }
+        
+        //и наконец представим это пользователю
+        present(mailComposer, animated: true, completion: nil)
+    }
+    
+    //штатная функция swift чтобы закрыть контроллер составления письма и вернуться в приложение
+    //Этот метод вызывается после отправки или отмены отправки письма пользователем. Здесь вы можете проверить значение result, чтобы определить, было ли письмо отправлено успешно, а error содержит любые ошибки, которые могли возникнуть при отправке. 
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true)
     }
     
 }
