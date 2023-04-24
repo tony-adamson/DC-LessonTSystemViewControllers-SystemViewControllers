@@ -56,15 +56,23 @@
 		02E312F729F6564D00272092 /* DC-LessonTSystemViewControllers-SystemViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				02E3130629F6564E00272092 /* Info.plist */,
 				02E312F829F6564D00272092 /* AppDelegate.swift */,
 				02E312FA29F6564D00272092 /* SceneDelegate.swift */,
-				02E312FC29F6564D00272092 /* ViewController.swift */,
+				02E3130329F6564E00272092 /* LaunchScreen.storyboard */,
 				02E312FE29F6564D00272092 /* Main.storyboard */,
 				02E3130129F6564E00272092 /* Assets.xcassets */,
-				02E3130329F6564E00272092 /* LaunchScreen.storyboard */,
-				02E3130629F6564E00272092 /* Info.plist */,
+				02E3130C29F6568900272092 /* Controller */,
 			);
 			path = "DC-LessonTSystemViewControllers-SystemViewControllers";
+			sourceTree = "<group>";
+		};
+		02E3130C29F6568900272092 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				02E312FC29F6564D00272092 /* ViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
